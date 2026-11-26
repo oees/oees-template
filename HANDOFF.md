@@ -63,7 +63,7 @@ Decisions that tech should check before the deploy. List each one with the reaso
 
 ## Checks
 
-Run on <date>, in <where: for example "the Claude chat workspace, Postgres 16 started locally">.
+Run on <date>, in <where: for example "the Claude chat workspace, Postgres 18 started locally">.
 
 | Check | Result | Notes |
 |---|---|---|

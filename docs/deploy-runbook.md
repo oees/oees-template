@@ -8,7 +8,7 @@ Each command says if it is **READ-ONLY** or if it **CHANGES** something.
 
 - One App Platform app per site, named `<site>-prod`, in region `ams`.
 - App Platform deploys every push to `main` by itself (`deploy_on_push: true`), through the DigitalOcean GitHub app. There is no deploy workflow in `.github/`.
-- `main` changes only through a pull request. The protection of `main` (step 1.1) is the only gate before production. A pull request runs `ci`: `check` (`make check` against Postgres 16), `secrets` (gitleaks) and `image` (Docker build and a `/healthz` smoke test).
+- `main` changes only through a pull request. The protection of `main` (step 1.1) is the only gate before production. A pull request runs `ci`: `check` (`make check` against Postgres 18), `secrets` (gitleaks) and `image` (Docker build and a `/healthz` smoke test).
 - The `migrate` `PRE_DEPLOY` job runs `python manage.py migrate --noinput` before each rollout.
 - App Platform keeps its own copy of the app spec. You create the app from `.do/app.yaml` once (section 3). A later change to `.do/app.yaml` reaches the app only when you apply it (section 4).
 - Secrets have no value in `.do/app.yaml`. You set each one in the App Platform console, encrypted. The live spec holds them as encrypted values (`EV[…]`).
@@ -43,13 +43,13 @@ The template has no Celery worker and no Redis. Add them only when a site needs 
    - The `ci` result.
    - The agent configuration: `uvx --from git+https://github.com/oees/agents@v1.0.0 oees-agents check`. It fails if someone edited the generated rules.
 4. **CHANGES** — Fix what the owner could not know, on the same branch:
-   - In `.do/app.yaml`: `name: <site>-prod`, both `github.repo: oees/<site>`, `db_name` and `db_user` (the slug with underscores), and `version` (the cluster's major version, from step 2.1). If the major is not 16, change the Postgres images in `compose.yml` and `.github/workflows/ci.yml` to the same major, pinned by digest.
+   - In `.do/app.yaml`: `name: <site>-prod`, both `github.repo: oees/<site>`, and `db_name` and `db_user` (the slug with underscores). Keep `version: "18"`: it is the major version of the cluster. If the cluster moves to another major, change `version` and the Postgres images in `compose.yml` and `.github/workflows/ci.yml` together, pinned by digest.
    - In `.oees-agents.toml`: the `[project]` name and description. Then run `uvx --from git+https://github.com/oees/agents@v1.0.0 oees-agents update` and commit the result.
 5. **CHANGES** — Once per repository: give the DigitalOcean GitHub app access to `oees/<site>`.
 
 ## 2. Prepare the database (before the first deploy)
 
-1. **READ-ONLY** — Get the cluster ID, region and version. The region must be `ams`. Put the major version in the spec.
+1. **READ-ONLY** — Get the cluster ID, region and version. The region must be `ams`, and the major version must be the `version` in the spec (18).
 
    ```bash
    doctl databases list
