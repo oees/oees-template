@@ -1,9 +1,11 @@
-# DigitalOcean App Platform spec, applied by .github/workflows/deploy.yml after ci passes
-# on main. deploy_on_push is off. Each deploy applies this whole file: config set only in
-# the DO console is removed. Edit only the lines marked EDIT.
-# Secrets live in the GitHub `production` environment; deploy.yml exports them and the
-# deploy action substitutes each ${NAME} below. Bindables (${db.DATABASE_URL},
-# ${APP_DOMAIN}, ${APP_URL}) are left for App Platform to resolve.
+# DigitalOcean App Platform spec. App Platform builds and deploys every push to main
+# (deploy_on_push), and runs the migrate job before each rollout. main changes only
+# through a reviewed pull request with a green ci, so a merge is a deploy.
+# Tech creates the app from this file once. After that, App Platform keeps its own copy:
+# a change to this file reaches the app only when tech applies it (docs/deploy-runbook.md).
+# Secrets have no value here: tech sets each one in the App Platform console, encrypted.
+# ${db.DATABASE_URL}, ${APP_DOMAIN} and ${APP_URL} are App Platform references.
+# Edit only the lines marked EDIT.
 name: website-prod # EDIT: SITE-prod
 region: ams # Same region as the cluster oees-tech-template-repo-ddbb. Do not change.
 
@@ -15,8 +17,7 @@ envs:
   - key: DJANGO_SETTINGS_MODULE
     value: config.settings.production
     scope: RUN_AND_BUILD_TIME
-  - key: DJANGO_SECRET_KEY
-    value: ${DJANGO_SECRET_KEY}
+  - key: DJANGO_SECRET_KEY # tech sets the value in the console, encrypted
     type: SECRET
     scope: RUN_TIME
   - key: DATABASE_URL
@@ -39,7 +40,7 @@ services:
     github:
       repo: oees/website # EDIT: the GitHub repository (owner/name)
       branch: main
-      deploy_on_push: false
+      deploy_on_push: true
     http_port: 8000
     instance_size_slug: apps-s-1vcpu-1gb
     instance_count: 2
@@ -58,7 +59,7 @@ jobs:
     github:
       repo: oees/website # EDIT: the GitHub repository (owner/name)
       branch: main
-      deploy_on_push: false
+      deploy_on_push: true
     run_command: python manage.py migrate --noinput
     instance_size_slug: apps-s-1vcpu-1gb
 

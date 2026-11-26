@@ -38,7 +38,7 @@ Every migration in this zip that is not in the template, with one line on what i
 
 ## Secrets needed
 
-Every `${NAME}` in `.do/app.yaml` other than `DJANGO_SECRET_KEY`, with what it is and where its value comes from. Never write a secret value here.
+Every entry with `type: SECRET` in `.do/app.yaml` other than `DJANGO_SECRET_KEY`, with what it is and where its value comes from. Tech sets each value in App Platform. Never write a secret value here or in any file.
 
 <"None.">
 
