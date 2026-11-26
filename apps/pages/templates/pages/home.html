@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+  {% translate "Page title" %} | Octopus Energy
+{% endblock title %}
+{% block header %}
+  {% include "pages/components/site-header.html" %}
+{% endblock header %}
+{% block content %}
+  <section>
+    <h1>{% translate "Your main headline goes here" %}</h1>
+    <p>
+      {% blocktranslate trimmed %}
+        Write the page text here. All the content is in the HTML, so search engines and link previews can read it.
+      {% endblocktranslate %}
+    </p>
+  </section>
+{% endblock content %}

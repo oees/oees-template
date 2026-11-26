@@ -1,0 +1,36 @@
+version = 1
+source = "v1.0.0"
+targets = [
+    "claude",
+    "codex",
+]
+
+[project]
+name = "website"
+description = "Public OEES website built by the marketing team from the Django website template. Server-rendered Django pages with htmx and Alpine, a database on the shared OEES Postgres cluster, deployed to DigitalOcean App Platform. HANDOFF.md describes this site."
+users = "Visitors to the OEES public website. The OEES marketing team owns the content"
+blast_radius = "customer-facing"
+default_branch = "main"
+check = "make check"
+check_fast = "make check-fast"
+
+[rules]
+defaults = [
+    "api",
+    "git",
+    "migrations",
+    "observability",
+    "quality-gates",
+    "standards",
+    "tdd",
+]
+
+[kits]
+enabled = [
+    "django-drf",
+    "htmx-alpine",
+]
+
+[extras]
+commands = true
+subagents = "core"
