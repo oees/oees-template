@@ -97,11 +97,12 @@ The template has no Celery worker and no Redis. Add them only when a site needs 
 
    `doctl databases firewalls list` does not accept `--no-header`. With it, the command errors, and a `grep` over the error reports a false "not found".
 
-7. **READ-ONLY** — Smoke test: `/healthz` and `/readyz` return 200, the home page, an unknown path (the site's 404 page), one page that reads from the database, and one form submission with synthetic data.
+7. **READ-ONLY** — Smoke test: `/healthz` and `/readyz` return 200, the home page, an unknown path (the site's 404 page), one page that reads from the database, and one form submission with synthetic data. For a staff-only site, an anonymous visitor gets the login page.
 8. **CHANGES** — If the owner reads the stored data in `/admin/`, give them an account:
    1. Run `doctl apps console APP_ID web`, then `python manage.py createsuperuser` for yourself.
    2. In `/admin/`, create a staff account for each person that `HANDOFF.md` names. Give it only the view permission on the site's models.
    3. Send each password through the password manager, never in chat or email.
+9. **CHANGES** — If `HANDOFF.md` says the site is staff-only, decide how staff log in: a Django account for each person (not staff, no admin access), or the company login. Then create the accounts, or connect the company login in a pull request.
 
 To veto at any point, request changes or close the pull request, and tell the owner what to change.
 
