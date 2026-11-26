@@ -1,0 +1,7 @@
+{% load i18n %}
+<header class="site-header">
+  <a class="site-header__brand" href="{% url 'pages:home' %}">Octopus Energy</a>
+  <nav aria-label="{% translate 'Main' %}">
+    <a href="{% url 'pages:home' %}">{% translate "Home" %}</a>
+  </nav>
+</header>
