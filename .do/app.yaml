@@ -77,7 +77,7 @@ ingress:
 databases:
   - name: db
     engine: PG
-    version: "16" # EDIT (tech): the cluster's major version; match compose.yml and ci.yml
+    version: "18"
     production: true
     cluster_name: oees-tech-template-repo-ddbb
     db_name: website # EDIT: the site slug with underscores; tech creates the database
