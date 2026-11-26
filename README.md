@@ -1,10 +1,10 @@
 # Plantilla de web con Django de OEES
 
-Esta plantilla sirve para crear una web pública que guarda datos: formularios, registros, contenido que cambia o usuarios que inician sesión. Tiene servidor (Django) y base de datos.
+Esta plantilla sirve para crear una web que guarda datos: formularios, registros, contenido que cambia o usuarios que inician sesión. Tiene servidor (Django) y base de datos. Sirve para webs públicas y para webs solo para empleados de OEES: en ese caso, la web pide iniciar sesión en cada página.
 
 Si tu web solo tiene páginas, textos, imágenes y partes interactivas sin guardar datos, usa la plantilla estática (`oees-template-static`). Es más sencilla. Claude te dice cuál necesitas.
 
-Si tu web es solo para empleados de OEES, no necesitas esta plantilla. Claude la prepara para Alexandria, la plataforma interna de OEES, y la publicas tú.
+Si tu web es solo para empleados de OEES y no guarda datos, no necesitas esta plantilla. Claude la prepara para Alexandria, la plataforma interna de OEES, y la publicas tú.
 
 ## Cómo trabajar
 

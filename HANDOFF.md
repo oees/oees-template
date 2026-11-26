@@ -8,6 +8,7 @@
 |---|---|
 | Name | `<site>` (the same as `name` in `pyproject.toml`; lowercase, hyphens) |
 | What it is for | <one or two sentences> |
+| Who can see it | <"anyone", or "OEES staff only: a login on every page"> |
 | Owner in marketing | <name> |
 | Public address wanted | <hostname, or "not decided"> |
 | Launch date wanted | <date, or "not decided"> |
